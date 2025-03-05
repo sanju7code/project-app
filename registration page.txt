@@ -1,0 +1,105 @@
+class RegistrationPage extends StatefulWidget {
+  @override
+  _RegistrationPageState createState() => _RegistrationPageState();
+}
+
+class _RegistrationPageState extends State<RegistrationPage> {
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  String _department = "CSE";
+  String _event = "Technical";
+  String _food = "Veg";
+  bool _transport = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Registration')),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Full Name'),
+              ),
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+              ),
+              DropdownButton<String>(
+                value: _department,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _department = newValue!;
+                  });
+                },
+                items: ['CSE', 'ECE', 'EEE', 'MECH']
+                    .map((String value) => DropdownMenuItem(
+                          value: value,
+                          child: Text(value),
+                        ))
+                    .toList(),
+              ),
+              DropdownButton<String>(
+                value: _event,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _event = newValue!;
+                  });
+                },
+                items: ['Technical', 'Non-Technical']
+                    .map((String value) => DropdownMenuItem(
+                          value: value,
+                          child: Text(value),
+                        ))
+                    .toList(),
+              ),
+              DropdownButton<String>(
+                value: _food,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _food = newValue!;
+                  });
+                },
+                items: ['Veg', 'Non-Veg']
+                    .map((String value) => DropdownMenuItem(
+                          value: value,
+                          child: Text(value),
+                        ))
+                    .toList(),
+              ),
+              SwitchListTile(
+                title: Text("Require Transport?"),
+                value: _transport,
+                onChanged: (bool value) {
+                  setState(() {
+                    _transport = value;
+                  });
+                },
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ConfirmationPage(
+                              name: _nameController.text,
+                              email: _emailController.text,
+                              department: _department,
+                              event: _event,
+                              food: _food,
+                              transport: _transport,
+                            )),
+                  );
+                },
+                child: Text('Submit'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

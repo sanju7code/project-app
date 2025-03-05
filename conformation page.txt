@@ -1,0 +1,44 @@
+import 'package:qr_flutter/qr_flutter.dart';
+
+class ConfirmationPage extends StatelessWidget {
+  final String name, email, department, event, food;
+  final bool transport;
+
+  ConfirmationPage({
+    required this.name,
+    required this.email,
+    required this.department,
+    required this.event,
+    required this.food,
+    required this.transport,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String qrData = "$name, $email, $department, $event, $food, Transport: $transport";
+
+    return Scaffold(
+      appBar: AppBar(title: Text('Confirmation')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Registration Successful!'),
+            SizedBox(height: 20),
+            QrImage(
+              data: qrData,
+              size: 200,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Go Home'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
